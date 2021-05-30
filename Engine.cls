@@ -28,6 +28,8 @@ Private DynamicQueue As New TimedActionQueue
 
 Private MissTimes As Long
 
+Private GamePaused As Boolean
+
 Private Static Function TimeUp(ByRef TimerObject As Double, _
     ByVal Standard As Double) As Boolean
     If TimerObject > Standard Then
@@ -141,7 +143,13 @@ Public Sub Run()
         Render
         FPSContext.Frames = FPSContext.Frames + 1
         TimerEnd = Timer
-        DoEvents
+        DynamicQueue.Pause
+        StaticQueue.Pause
+        Do
+            DoEvents
+        Loop While GamePaused
+        DynamicQueue.Continue
+        StaticQueue.Continue
     Loop
     End
 End Sub
@@ -156,6 +164,7 @@ Private Sub Context_KeyDown(KeyCode As Integer, Shift As Integer)
             Case vbKeyLeft: .PressedLeft = True
             Case vbKeyRight: .PressedRight = True
             Case vbKeyEscape: End
+            Case vbKeySpace: GamePaused = Not GamePaused
         End Select
     End With
 End Sub

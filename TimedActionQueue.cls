@@ -15,10 +15,16 @@ Option Explicit
 
 Private Front As ActionQueueNode
 Private Back As ActionQueueNode
+Private TimeStopped As Double
+Private LastStop As Double
+
+Public Function Timing() As Single
+    Timing = Timer - TimeStopped
+End Function
 
 Public Sub ExecuteLater(Action As IAction, Delay As Single)
     Dim ActualTime As Single
-    ActualTime = Timer + Delay
+    ActualTime = Timer - TimeStopped + Delay
     Dim Node As New ActionQueueNode
     Set Node.Action = Action
     Node.When = ActualTime
@@ -50,7 +56,7 @@ End Sub
 Public Sub Flush()
     Dim PendingAction As New Collection
     Do Until Front Is Nothing
-        If Front.When > Timer Then
+        If Front.When > Timer - TimeStopped Then
             Exit Do
         End If
         PendingAction.Add Front.Action
@@ -65,4 +71,12 @@ Public Sub Flush()
     For Each Action In PendingAction
         Action.Invoke Me
     Next
+End Sub
+
+Public Sub Pause()
+    LastStop = Timer
+End Sub
+
+Public Sub Continue()
+    TimeStopped = TimeStopped + Timer - LastStop
 End Sub
