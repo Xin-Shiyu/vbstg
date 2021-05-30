@@ -13,9 +13,11 @@ End Function
 
 Public Function ShootBullet(ByVal Self As SelfPlane, ByVal Pool As BulletPool)
     With Self.Pos
+        Dim SlantY As Double
+        SlantY = Sqr(1 - (Self.BulletSpeedX / 2000) ^ 2) * 2000
         Pool.Insert NewLinear(.X, .Y, 0, -2000)
-        Pool.Insert NewLinear(.X, .Y, -Self.BulletSpeedX, -2000)
-        Pool.Insert NewLinear(.X, .Y, Self.BulletSpeedX, -2000)
+        Pool.Insert NewLinear(.X, .Y, -Self.BulletSpeedX, -SlantY)
+        Pool.Insert NewLinear(.X, .Y, Self.BulletSpeedX, -SlantY)
     End With
 End Function
 
