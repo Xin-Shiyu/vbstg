@@ -18,9 +18,14 @@ Public Pool As BulletPool
 Public Self As SelfPlane
 
 Private Sub IAction_Invoke(ByVal Queue As TimedActionQueue)
-    Dim X As Double, Y As Double
-    X = Rnd * GameWidth
-    Y = Rnd * GameWidth
-    Pool.Insert NewSelfShoot(X, Y, Self.Pos)
-    Queue.ExecuteLater NewEnemyShootingActionTest(Self, Pool), 0.5
+    Dim I As Double, Y As Double
+    Dim Target As Integer
+    Target = Rnd * 60 - 30
+    For I = -200 To 200 Step 10
+        Y = Sqr(200 ^ 2 - I ^ 2)
+        If Abs(I - Target) >= 30 Then
+            Pool.Insert NewLinear(GameWidth / 2, 0, I, Y, 8)
+        End If
+    Next
+    Queue.ExecuteLater NewEnemyShootingActionTest(Self, Pool), 0.1
 End Sub

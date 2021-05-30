@@ -24,6 +24,9 @@ Private EnemyBulletPool As New BulletPool
 Private FPSContext As New FPSCalcContext
 
 Private StaticQueue As New TimedActionQueue
+Private DynamicQueue As New TimedActionQueue
+
+Private MissTimes As Long
 
 Private Static Function TimeUp(ByRef TimerObject As Double, _
     ByVal Standard As Double) As Boolean
@@ -38,6 +41,7 @@ End Function
 Private Sub Update(ByVal TimeDiff As Double)
     Self.Update TimeDiff
     
+    DynamicQueue.Flush
     StaticQueue.Flush
     
     MyBulletPool.UpdateAll TimeDiff
@@ -70,6 +74,8 @@ Private Sub RenderSelf()
             Context.FillColor = vbYellow
         Else
             Context.FillColor = vbBlack
+            MissTimes = MissTimes + 1
+            EnemyBulletPool.Clear
         End If
         Context.Circle (.Pos.X, .Pos.Y), 20, vbRed
         Context.DrawWidth = 1
@@ -98,6 +104,10 @@ Private Sub Render()
     Context.Cls
     
     Context.Print "FPS:", FPSContext.FPS
+    Context.Print "My Bullet Count:", MyBulletPool.BulletCount
+    Context.Print "Enemy Bullet Count:", EnemyBulletPool.BulletCount
+    Context.Print "Miss Times:", MissTimes
+    
     RenderMyBullets
     RenderSelf
     RenderEnemyBullets
@@ -120,6 +130,7 @@ Public Sub Run()
     LastTimer = Timer
     StaticQueue.ExecuteLater NewSelfShootingAction(Self, MyBulletPool), 0
     StaticQueue.ExecuteLater NewFPSCalcAction(FPSContext), 1
+    DynamicQueue.ExecuteLater NewEnemyShootingActionTest(Self, EnemyBulletPool), 0.5
     Do While Context.Visible = True
         Dim TimeDiff As Double
         TimeDiff = Timer - LastTimer

@@ -39,3 +39,8 @@ Public Sub Update(ByVal TimeDiff As Double)
         If .X < 0 Then .X = 0
     End With
 End Sub
+
+Private Sub Class_Initialize()
+    Pos.X = GameWidth / 2
+    Pos.Y = GameHeight * 9 / 10
+End Sub

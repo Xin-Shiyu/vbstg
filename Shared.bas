@@ -6,12 +6,13 @@ Public Const SelfBulletSpeedXMax = 950
 Public Const SelfBulletSpeedXMin = 10
 
 Public Function NewLinear(ByVal X As Double, ByVal Y As Double, _
-    ByVal Xs As Double, ByVal Ys As Double) As LinearBullet
+    ByVal Xs As Double, ByVal Ys As Double, Optional Size As Double = 5) As LinearBullet
     Set NewLinear = New LinearBullet
     NewLinear.Position.X = X
     NewLinear.Position.Y = Y
     NewLinear.Speed.X = Xs
     NewLinear.Speed.Y = Ys
+    NewLinear.Size = Size
 End Function
 
 Public Function ShootBullet(ByVal Self As SelfPlane, ByVal Pool As BulletPool)
@@ -30,6 +31,14 @@ Public Function NewSelfShootingAction(ByVal Self As SelfPlane, _
     Set Ret.Pool = Pool
     Set Ret.Self = Self
     Set NewSelfShootingAction = Ret
+End Function
+
+Public Function NewEnemyShootingActionTest(ByVal Self As SelfPlane, _
+    ByVal Pool As BulletPool) As IAction
+    Dim Ret As New EnemyShootingActionTest
+    Set Ret.Pool = Pool
+    Set Ret.Self = Self
+    Set NewEnemyShootingActionTest = Ret
 End Function
 
 Public Function NewFPSCalcAction(ByVal Context As FPSCalcContext) As IAction
