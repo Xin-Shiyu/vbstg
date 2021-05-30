@@ -20,9 +20,9 @@ Public Self As SelfPlane
 Private Sub IAction_Invoke(ByVal Queue As TimedActionQueue)
     If Self.IsShooting Then ShootBullet Self, Pool
     If Self.SlowMode Then
-        Self.BulletSpeedX = Self.BulletSpeedX + (10 - Self.BulletSpeedX) / 2
+        Self.BulletSpeedX = Self.BulletSpeedX + (SelfBulletSpeedXMin - Self.BulletSpeedX) / 2
     Else
-        Self.BulletSpeedX = Self.BulletSpeedX + (1000 - Self.BulletSpeedX) / 2
+        Self.BulletSpeedX = Self.BulletSpeedX + (SelfBulletSpeedXMax - Self.BulletSpeedX) / 2
     End If
-    Queue.ExecuteLater NewSelfShootingAction(Self, Pool), 0.01
+    Queue.ExecuteLater NewSelfShootingAction(Self, Pool), 0.02
 End Sub

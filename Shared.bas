@@ -1,6 +1,9 @@
 Attribute VB_Name = "Shared"
 Public Const GameWidth As Double = 576
 Public Const GameHeight As Double = 672
+Public Const SelfBulletSpeed = 1344
+Public Const SelfBulletSpeedXMax = 950
+Public Const SelfBulletSpeedXMin = 10
 
 Public Function NewLinear(ByVal X As Double, ByVal Y As Double, _
     ByVal Xs As Double, ByVal Ys As Double) As LinearBullet
@@ -14,8 +17,8 @@ End Function
 Public Function ShootBullet(ByVal Self As SelfPlane, ByVal Pool As BulletPool)
     With Self.Pos
         Dim SlantY As Double
-        SlantY = Sqr(1 - (Self.BulletSpeedX / 2000) ^ 2) * 2000
-        Pool.Insert NewLinear(.X, .Y, 0, -2000)
+        SlantY = Sqr(1 - (Self.BulletSpeedX / SelfBulletSpeed) ^ 2) * SelfBulletSpeed
+        Pool.Insert NewLinear(.X, .Y, 0, -SelfBulletSpeed)
         Pool.Insert NewLinear(.X, .Y, -Self.BulletSpeedX, -SlantY)
         Pool.Insert NewLinear(.X, .Y, Self.BulletSpeedX, -SlantY)
     End With

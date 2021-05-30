@@ -19,7 +19,7 @@ Public PressedLeft As Boolean, PressedRight As Boolean
 Public SlowMode As Boolean, IsShooting As Boolean
 Public BulletSpeedX As Double
 
-Private Const SlowSpeed = 100, FastSpeed = 350
+Private Const SlowSpeed = 164, FastSpeed = 460
 
 Public Sub Update(ByVal TimeDiff As Double)
     Dim MoveDiff As Double
