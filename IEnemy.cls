@@ -13,3 +13,14 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Public Sub Damage(Extent As Long)
+End Sub
+
+Public Function GetPosition() As Point
+End Function
+
+Public Function GetSize() As Double
+End Function
+
+Public Function IsAlive() As Boolean
+End Function
