@@ -1,0 +1,26 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+  Persistable = 0  'NotPersistable
+  DataBindingBehavior = 0  'vbNone
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
+Attribute VB_Name = "EnemyShootingActionTest"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
+Option Explicit
+Implements IAction
+
+Public Pool As BulletPool
+Public Self As SelfPlane
+
+Private Sub IAction_Invoke(ByVal Queue As TimedActionQueue)
+    Dim X As Double, Y As Double
+    X = Rnd * GameWidth
+    Y = Rnd * GameWidth
+    Pool.Insert NewSelfShoot(X, Y, Self.Pos)
+    Queue.ExecuteLater NewEnemyShootingActionTest(Self, Pool), 0.5
+End Sub
