@@ -120,24 +120,27 @@ Public Sub Bind(ByVal Frm As Form)
     Context.BackColor = vbBlack
     Context.Width = GameWidth * Screen.TwipsPerPixelX + (Context.Width - Context.ScaleWidth)
     Context.Height = GameHeight * Screen.TwipsPerPixelY + (Context.Height - Context.ScaleHeight)
-    Context.ScaleMode = vbPixels
+    Context.ScaleWidth = GameWidth
+    Context.ScaleHeight = GameHeight
 End Sub
 
 Public Sub Run()
     Randomize
     Context.Show
-    Dim LastTimer As Double
-    LastTimer = Timer
+    Dim TimerBegin As Double, TimerEnd As Double
+    TimerBegin = 0
+    TimerEnd = 1 / 60
+    Dim TimeDiff As Double
     StaticQueue.ExecuteLater NewSelfShootingAction(Self, MyBulletPool), 0
     StaticQueue.ExecuteLater NewFPSCalcAction(FPSContext), 1
     DynamicQueue.ExecuteLater NewEnemyShootingActionTest(Self, EnemyBulletPool), 0.5
     Do While Context.Visible = True
-        Dim TimeDiff As Double
-        TimeDiff = Timer - LastTimer
+        TimeDiff = TimerEnd - TimerBegin
+        TimerBegin = Timer
         Update TimeDiff
-        LastTimer = Timer
         Render
         FPSContext.Frames = FPSContext.Frames + 1
+        TimerEnd = Timer
         DoEvents
     Loop
     End
