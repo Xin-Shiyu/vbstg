@@ -29,8 +29,7 @@ Public Sub UpdateAll(ByVal TimeDiff As Double)
         It.Nx.Bullet.Update TimeDiff
         Dim Pos As Point
         Set Pos = It.Nx.Bullet.GetPosition
-        If Pos.X < 0 Or Pos.X > GameWidth Or _
-           Pos.Y < 0 Or Pos.Y > GameHeight Then
+        If Not It.Nx.Bullet.IsAlive Then
            Set It.Nx = It.Nx.Nx
         End If
         Set It = It.Nx

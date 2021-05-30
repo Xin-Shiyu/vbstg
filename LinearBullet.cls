@@ -22,7 +22,11 @@ Private Sub Class_Initialize()
 End Sub
 
 Private Function IBullet_IsAlive() As Boolean
-    IBullet_IsAlive = True
+    With Position
+        IBullet_IsAlive = _
+            .X > -Size And .Y > -Size And _
+            .X < GameWidth + Size And .Y < GameHeight + Size
+    End With
 End Function
 
 Public Sub IBullet_Update(ByVal TimeDiff As Double)
