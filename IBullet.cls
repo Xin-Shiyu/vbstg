@@ -23,3 +23,10 @@ End Function
 
 Public Function IsAlive() As Boolean
 End Function
+
+Public Sub SetGrazed()
+End Sub
+
+Public Function IsGrazed() As Boolean
+End Function
+

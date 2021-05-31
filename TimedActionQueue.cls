@@ -18,12 +18,12 @@ Private Back As ActionQueueNode
 Private TimeStopped As Double
 Private LastStop As Double
 
-Public Function Timing() As Single
+Public Function Timing() As Double
     Timing = Timer - TimeStopped
 End Function
 
-Public Sub ExecuteLater(Action As IAction, Delay As Single)
-    Dim ActualTime As Single
+Public Sub ExecuteLater(Action As IAction, Delay As Double)
+    Dim ActualTime As Double
     ActualTime = Timer - TimeStopped + Delay
     Dim Node As New ActionQueueNode
     Set Node.Action = Action

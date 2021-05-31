@@ -24,5 +24,5 @@ Private Sub IAction_Invoke(ByVal Queue As TimedActionQueue)
     Else
         Self.BulletSpeedX = Self.BulletSpeedX + (SelfBulletSpeedXMax - Self.BulletSpeedX) / 2
     End If
-    Queue.ExecuteLater NewSelfShootingAction(Self, Pool), 0.02
+    Queue.ExecuteLater Me, 0.02
 End Sub

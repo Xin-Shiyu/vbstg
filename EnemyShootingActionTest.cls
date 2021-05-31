@@ -16,16 +16,24 @@ Implements IAction
 
 Public Pool As BulletPool
 Public Self As SelfPlane
+Public RelatedEnemy As IEnemy
+Public Counter As Long
 
 Private Sub IAction_Invoke(ByVal Queue As TimedActionQueue)
-    Dim I As Double, Y As Double
-    Dim Target As Integer
-    Target = Rnd * 60 - 30
-    For I = -200 To 200 Step 10
-        Y = Sqr(200 ^ 2 - I ^ 2)
-        If Abs(I - Target) >= 30 Then
-            Pool.Insert NewLinear(GameWidth / 2, 0, I, Y, 8)
-        End If
-    Next
-    Queue.ExecuteLater NewEnemyShootingActionTest(Self, Pool), 0.1
+    If Not RelatedEnemy.IsAlive Or Counter > 20 Then
+        Set RelatedEnemy = Nothing
+        Exit Sub
+    End If
+    
+    Dim EPos As Point, SPos As Point, K As Double, Xs As Double, Ys As Double
+    Set EPos = RelatedEnemy.GetPosition
+    Set SPos = Self.Pos
+    Xs = SPos.X - EPos.X
+    Ys = SPos.Y - EPos.Y
+    K = Sqr(Xs ^ 2 + Ys ^ 2)
+    Pool.Insert NewLinear(EPos.X, EPos.Y, Xs / K * 300, Ys / K * 300, 10)
+    Counter = Counter + 1
+    
+    Queue.ExecuteLater Me, 0.2
 End Sub
+

@@ -15,3 +15,8 @@ Option Explicit
 
 Public X As Double
 Public Y As Double
+
+Public Function DistanceTo(That As Point) As Double
+    DistanceTo = Sqr((Me.X - That.X) ^ 2 + (Me.Y - That.Y) ^ 2)
+End Function
+

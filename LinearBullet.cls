@@ -16,6 +16,7 @@ Implements IBullet
 Public Position As New Point
 Public Speed As New Point
 Public Size As Double
+Private IsGrazed As Boolean
 
 Private Sub Class_Initialize()
     Size = 5
@@ -28,6 +29,14 @@ Private Function IBullet_IsAlive() As Boolean
             .X < GameWidth + Size And .Y < GameHeight + Size
     End With
 End Function
+
+Private Function IBullet_IsGrazed() As Boolean
+    IBullet_IsGrazed = IsGrazed
+End Function
+
+Private Sub IBullet_SetGrazed()
+    IsGrazed = True
+End Sub
 
 Public Sub IBullet_Update(ByVal TimeDiff As Double)
     Position.X = Position.X + TimeDiff * Speed.X
